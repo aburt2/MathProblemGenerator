@@ -59,20 +59,13 @@ def random_math():
     solution = np.linalg.solve(A,B)
     return a1,b1,c1,a2,b2,c2,solution
     
-def generate_math_problems():
+def generate_math_problems(problems):
     '''
     Generates a number of linear algebra problems. 
     The user must answer at 70% of those problems correctly
     '''
     correct_answers = 0
     attempted_problems = 0
-    while True:
-        problems = input('Number of problems you want to attempt:')
-        try:
-            problems = int(problems)
-            break
-        except ValueError:
-            print('Please enter an integer')
     while attempted_problems < problems:
         a1,b1,c1,a2,b2,c2,solution = random_math() 
         show_problem(a1,b1,c1,a2,b2,c2)
@@ -98,6 +91,13 @@ def generate_math_problems():
         else:
             print('Please responde with Yes or No')
 
-generate_math_problems()     
+while True:
+    problems = input('Number of problems you want to attempt:')
+    try:
+        problems = int(problems)
+        break
+    except ValueError:
+        print('Please enter an integer')
+generate_math_problems(problems)     
 
     
