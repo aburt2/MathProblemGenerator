@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{b1dcb1ef-d44e-4e1b-adc3-13782fce0603}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>team_generator.py</StartupFile>
+    <StartupFile>linear_algebra_problems.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
