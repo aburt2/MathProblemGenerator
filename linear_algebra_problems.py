@@ -48,7 +48,7 @@ def interpret_solution(solution,type):
             try:
                 x = float(response1)
                 y = float(response2)
-                if abs(x-solution[0]) < 0.05*solution[0] and abs(y-solution[1]) < 0.05*solution[1]:
+                if abs(x-solution[0]) < abs(0.05*solution[0]) and abs(y-solution[1]) < abs(0.05*solution[1]):
                     print('\nCorrect'+'\n')
                     return 1
                     break
@@ -65,7 +65,7 @@ def interpret_solution(solution,type):
             response1 = input('\nWhat is x? ')
             try:
                 x = float(response1)
-                if abs(x-solution[0]) < 0.05*solution[0]:
+                if abs(x-solution[0]) < abs(0.05*solution[0]):
                     print('\nCorrect\n')
                     return 1
                     break
