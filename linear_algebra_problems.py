@@ -45,38 +45,58 @@ def interpret_solution(solution,type):
         while True:
             response1 = input('\nWhat is x? ')
             response2 = input('What is y? ')
-            try:
-                x = float(response1)
-                y = float(response2)
-                if abs(x-solution[0]) < abs(0.05*solution[0]) and abs(y-solution[1]) < abs(0.05*solution[1]):
-                    print('\nCorrect'+'\n')
+            if len(solution) == 0:
+                if response1 == 'no solution' or response1 == 'No solution' or response1 == 'No Solution' or response2 == 'no solution' or response2 == 'No solution' or response2 == 'No Solution':
+                    print('\nCorrect')
                     return 1
                     break
                 else:
-                    print('\n'+'Either x or y is incorrect')
-                    print('The correct answer is'+'\n')
-                    print('x = '+str(solution[0]) + '\n'+ 'y = ' + str(solution[1])+str('\n'))
+                    print('\nThere is no solution to the system of linear equations.')
                     return 0
                     break
-            except ValueError:
-                print('Please enter your answer as an integer or decimal')
+            else:
+                try:
+                    x = float(response1)
+                    y = float(response2)
+                    if abs(x-solution[0]) < abs(0.05*solution[0]) and abs(y-solution[1]) < abs(0.05*solution[1]):
+                        print('\nCorrect'+'\n')
+                        return 1
+                        break
+                    else:
+                        print('\n'+'Either x or y is incorrect')
+                        print('The correct answer is'+'\n')
+                        print('x = '+str(solution[0]) + '\n'+ 'y = ' + str(solution[1])+str('\n'))
+                        return 0
+                        break
+                except ValueError:
+                    print('Please enter your answer as an integer or decimal')
     elif type == '2' or type == '3':
-        while True:
-            response1 = input('\nWhat is x? ')
-            try:
-                x = float(response1)
-                if abs(x-solution[0]) < abs(0.05*solution[0]):
-                    print('\nCorrect\n')
-                    return 1
-                    break
+            while True:
+                response1 = input('\nWhat is x? ')
+                if len(solution) == 0:
+                    if response1 == 'no solution' or response1 == 'No solution' or response1 == 'No Solution':
+                        print('\nCorrect')
+                        return 1
+                        break
+                    else:
+                        print('\nThere is no solution to this algebraic expression')
+                        return 0
+                        break
                 else:
-                    print('\n'+'x is incorrect')
-                    print('The correct answer is'+'\n')
-                    print('x = '+str(solution[0]) + '\n')
-                    return 0
-                    break
-            except ValueError:
-                print('Please enter your answer as an integer or decimal')
+                    try:
+                        x = float(response1)
+                        if abs(x-solution[0]) < abs(0.05*solution[0]):
+                            print('\nCorrect\n')
+                            return 1
+                            break
+                        else:
+                            print('\n'+'x is incorrect')
+                            print('The correct answer is'+'\n')
+                            print('x = '+str(solution[0]) + '\n')
+                            return 0
+                            break
+                    except ValueError:
+                        print('Please enter your answer as an integer or decimal')
     else:
         print('Invalid type entered. Please enter 1,2 or 3 for type of problem')
         type = input('Type of problem: ')
