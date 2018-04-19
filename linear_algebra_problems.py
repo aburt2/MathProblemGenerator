@@ -160,7 +160,7 @@ def generate_math_problems(problems,type):
             attempted_problems += 1
     score = 100* correct_answers/attempted_problems
     if score < 70:
-        print('Your score is '+str(score)+'\n')
+        print('Your score is '+str(score)+'%\n')
         print('Please attempt this again to obtain a score of at least 70'+'\n**************************\n')
         generate_math_problems(problems,type)
     else:
@@ -176,10 +176,15 @@ def generate_math_problems(problems,type):
 
 def getinput():
     while True:
-        problems = input('Number of problems you want to attempt:')
+        problems = input('Number of problems you want to attempt(max 20):')
         try:
             problems = int(problems)
-            break
+            if problems <= 0:
+                print('There must be more than 0 problems')
+            elif problems > 20:
+                print('There can only be at most 20 problems')
+            else:
+                break
         except ValueError:
             print('Please enter an integer')
     print('''There are three types of problems that can be attempted \n 
