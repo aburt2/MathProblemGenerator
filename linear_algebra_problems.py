@@ -9,7 +9,21 @@ import numpy as np
 import sympy
 from sympy.solvers import solve
 from sympy import Symbol
-
+def convert_to_float(answer):
+    '''
+    Converts a string input in the form of an integer, decimal or fraction into a float class
+    '''
+    try:                        
+        return float(answer)
+    except ValueError:
+        try:
+            num, denom = answer.split('/')
+            frac = float(num)/float(denom)
+            return frac
+        except ValueError:
+            return None 
+        except ZeroDivisionError:
+            return None
 def show_problem(a1,b1,c1,a2,b2,c2,type):
     '''
     If type = 1 then prints a system of linear equations in the form
@@ -45,58 +59,38 @@ def interpret_solution(solution,type):
         while True:
             response1 = input('\nWhat is x? ')
             response2 = input('What is y? ')
-            if len(solution) == 0:
-                if response1 == 'no solution' or response1 == 'No solution' or response1 == 'No Solution' or response2 == 'no solution' or response2 == 'No solution' or response2 == 'No Solution':
-                    print('\nCorrect')
+            x = convert_to_float(response1)
+            y = convert_to_float(response2)
+            if x != None and y != None:                 #If the x and y inputs were valid calculates to see if they are correct
+                if abs(x-solution[0]) < abs(0.05*solution[0]) and abs(y-solution[1]) < abs(0.05*solution[1]):
+                    print('\nCorrect'+'\n')
                     return 1
                     break
                 else:
-                    print('\nThere is no solution to the system of linear equations.')
+                    print('\n'+'Either x or y is incorrect')
+                    print('The correct answer is'+'\n')
+                    print('x = '+str(solution[0]) + '\n'+ 'y = ' + str(solution[1])+str('\n'))
                     return 0
                     break
-            else:
-                try:
-                    x = float(response1)
-                    y = float(response2)
-                    if abs(x-solution[0]) < abs(0.05*solution[0]) and abs(y-solution[1]) < abs(0.05*solution[1]):
-                        print('\nCorrect'+'\n')
-                        return 1
-                        break
-                    else:
-                        print('\n'+'Either x or y is incorrect')
-                        print('The correct answer is'+'\n')
-                        print('x = '+str(solution[0]) + '\n'+ 'y = ' + str(solution[1])+str('\n'))
-                        return 0
-                        break
-                except ValueError:
-                    print('Please enter your answer as an integer or decimal')
+            else:                                       #Gives users a chance to reinput their answer if their input was invalid
+                print('Please enter an integer,decimal or a fraction')              
     elif type == '2' or type == '3':
             while True:
                 response1 = input('\nWhat is x? ')
-                if len(solution) == 0:
-                    if response1 == 'no solution' or response1 == 'No solution' or response1 == 'No Solution':
-                        print('\nCorrect')
+                x = convert_to_float(response1)
+                if x != None:
+                    if abs(x-solution[0]) < abs(0.05*solution[0]):
+                        print('\nCorrect\n')
                         return 1
                         break
                     else:
-                        print('\nThere is no solution to this algebraic expression')
+                        print('\n'+'x is incorrect')
+                        print('The correct answer is'+'\n')
+                        print('x = '+str(solution[0]) + '\n')
                         return 0
                         break
                 else:
-                    try:
-                        x = float(response1)
-                        if abs(x-solution[0]) < abs(0.05*solution[0]):
-                            print('\nCorrect\n')
-                            return 1
-                            break
-                        else:
-                            print('\n'+'x is incorrect')
-                            print('The correct answer is'+'\n')
-                            print('x = '+str(solution[0]) + '\n')
-                            return 0
-                            break
-                    except ValueError:
-                        print('Please enter your answer as an integer or decimal')
+                    print('Please enter your answer as an integer, decimal or a fraction')
     else:
         print('Invalid type entered. Please enter 1,2 or 3 for type of problem')
         type = input('Type of problem: ')
@@ -141,6 +135,8 @@ def random_math(type):
         print('Invalid type please input 1 2 or 3')
         type = input('Type of problem: ')
         random_math(type)
+    if len(solution) == 0:                                 #In the case that there is no solution the numbers are generated again in order to make sure the system has a solution
+        random_math(type)
     return a1,b1,c1,a2,b2,c2,solution
 def generate_math_problems(problems,type):
     '''
@@ -149,7 +145,7 @@ def generate_math_problems(problems,type):
     '''
     correct_answers = 0
     attempted_problems = 0
-    while attempted_problems < problems:
+    while attempted_problems < problems:                                            #Generates Problems
         a1,b1,c1,a2,b2,c2,solution = random_math(type) 
         show_problem(a1,b1,c1,a2,b2,c2,type)
         response = interpret_solution(solution,type)
@@ -159,7 +155,7 @@ def generate_math_problems(problems,type):
         else:
             attempted_problems += 1
     score = 100* correct_answers/attempted_problems
-    if score < 70:
+    if score < 70:                                                                  #Checks if the user needs to do more problems
         print('Your score is '+str(score)+'%\n')
         print('Please attempt this again to obtain a score of at least 70'+'\n**************************\n')
         generate_math_problems(problems,type)
@@ -177,7 +173,7 @@ def generate_math_problems(problems,type):
 def getinput():
     while True:
         problems = input('Number of problems you want to attempt(max 20):')
-        try:
+        try:                                                                        #Ensures that the user inputs a valid number of problems
             problems = int(problems)
             if problems <= 0:
                 print('There must be more than 0 problems')
@@ -191,7 +187,7 @@ def getinput():
         1) System of Linear equations in the form a1x+b1y=c1 and a2x+b2y=c2 \n 
         2) Algebraic Equation in the form (a1/a2)x + (b1/b2) = (c1/c2) \n
         3) Algebraic Equation in the form (a1/a2)x + (b1/b2) = (c1/c2)x''')
-    while True:
+    while True:                                                                     #Ensures the user inputs a valid type of problem
         type = input('\nEnter the type of problem you want to attempt(1,2 or 3): ')
         if type == '1' or type == '2' or type == '3':
             return problems,type
